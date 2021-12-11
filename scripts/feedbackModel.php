@@ -56,53 +56,40 @@ class feedbackModel {
             exit;
         }
         
-        if (!$result) {
-            self::errorMessage("Ошибка запроса");
-        }
-        
-        //Проверяем есть пользователь в базе или нет
-        $query = "SELECT user_id FROM $this->user_tablename WHERE email = '$email'";
-        
+        //Проверяем есть пользователь в базе или нет    
         try{
-            $result = $PDO->query($query);
+            $stmt = $PDO->prepare("SELECT user_id FROM $this->user_tablename WHERE email = ?");
+            $stmt->execute([$email]);
         } catch (PDOException $exception) {
             echo $exception->getMessage();
             exit;
         }
         
-        if (!$result) {
-            self::errorMessage("Ошибка запроса");
-        }
-        $query_data = $result->fetch(PDO::FETCH_ASSOC);
+        $query_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $user_id = $query_data['user_id'];
-        
+        //Пользователь новый заносим данные в базу
         if(!$user_id){
-            $query = "INSERT INTO $this->user_tablename VALUES(NULL,'$name','$phone','$email')";
-
             try{
-                $result = $PDO->query($query);
+                $stmt = $PDO->prepare("INSERT INTO $this->user_tablename VALUES (NULL, :name, :phone, :email)");
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':phone', $phone);
+                $stmt->bindParam(':email', $email);
+                $stmt->execute();
             } catch (PDOException $exception) {
                 echo $exception->getMessage();
                 exit;
             }
 
-            if (!$result) {
-                self::errorMessage("Ошибка запроса");
-            }
-
-            $query = "SELECT user_id FROM $this->user_tablename WHERE email = '$email'";
-
+            
             try{
-                $result = $PDO->query($query);
+                $stmt = $PDO->prepare("SELECT user_id FROM $this->user_tablename WHERE email = ?");
+                $stmt->execute([$email]);
             } catch (PDOException $exception) {
                 echo $exception->getMessage();
                 exit;
             }
 
-            if (!$result) {
-                self::errorMessage("Ошибка запроса");
-            }
-            $query_data = $result->fetch(PDO::FETCH_ASSOC);
+            $query_data = $stmt->fetch(PDO::FETCH_ASSOC);
             $user_id = $query_data['user_id'];
         }
         
@@ -110,34 +97,29 @@ class feedbackModel {
         
         
         foreach ($this->fileNameArr as $filename) {
-            
-            $query = "SELECT file_id FROM $this->file_tablename WHERE filename = '$filename' AND user_id = '$user_id'";
-        
+            //Проверяем существование файла у пользователя
             try{
-                $result = $PDO->query($query);
+                $stmt = $PDO->prepare("SELECT file_id FROM $this->file_tablename WHERE filename = :filename AND user_id = :user_id");
+                $stmt->bindParam(':filename', $filename);
+                $stmt->bindParam(':user_id', $user_id);
+                $stmt->execute();
             } catch (PDOException $exception) {
                 echo $exception->getMessage();
                 exit;
             }
 
-            if (!$result) {
-                self::errorMessage("Ошибка запроса");
-            }
-            $query_data = $result->fetch(PDO::FETCH_ASSOC);
+            $query_data = $stmt->fetch(PDO::FETCH_ASSOC);
             $file_id = $query_data['file_id'];
-            
+            //Если файл новый у пользователя заносим в базу
             if(!$file_id){
-                $query = "INSERT INTO $this->file_tablename VALUES(NULL,'$user_id','$filename',CURRENT_TIMESTAMP)";
-
                 try{
-                    $result = $PDO->query($query);
+                    $stmt = $PDO->prepare("INSERT INTO $this->file_tablename VALUES (NULL, :user_id, :filename, CURRENT_TIMESTAMP)");
+                    $stmt->bindParam(':user_id', $user_id);
+                    $stmt->bindParam(':filename', $filename);
+                    $stmt->execute();
                 } catch (PDOException $exception) {
                     echo $exception->getMessage();
                     exit;
-                }
-
-                if (!$result) {
-                    self::errorMessage("Ошибка запроса");
                 }
             }
         }
@@ -151,9 +133,6 @@ class feedbackModel {
             exit;
         }
         
-        if (!$result) {
-            self::errorMessage("Ошибка запроса");
-        }
         $this->data[] = 'Данные пользователя сохранены.';
         $this->ObjDb->db_close();
           
@@ -249,7 +228,6 @@ class feedbackModel {
     
     private function errorMessage($msg) {        
         echo $msg;
-        $this->ObjDb->db_close();
         exit;
     }
 
