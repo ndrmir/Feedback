@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Обратная связь</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/index.css" media="all"/>
+        <script type="text/javascript" src="js/jquery-3.6.0.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </head>
+    <body>
+        <div>
+            <form action="" method="post" name="form">
+                <div class="fieldset" id="elementParent">
+                    <center><b>Отправьте отзыв</b></center>
+                    <label for="name">Имя:</label><br/>
+                    <input name="name" id="name" type="text" size="20" maxlength="20"/>
+                    <br/>
+                    <label for="phone">Телефон:</label><br/>
+                    <input name="phone" id="phone" type="text" size="20" maxlength="20"/>
+                    <br/>
+                    <label for="email">E-mail:</label><br/>
+                    <input name="email" id="email" type="text" size="30" maxlength="40"/>
+                    <br/>
+                    <label for="file">Выберите файлы:</label><br/>
+                    <input name="file0" multiple id="file0" type="file" onChange="addFileInput(this);"/>
+                    <br/>
+                    <br/>
+                    <img src="scripts/generation_of_pic.php" name="generation" width="110" height="40"/>
+                    <a class="caption" href="javascript: change();">не видите символов?</a>
+                    <br/>
+                    <br/>
+                    <label for="password"> Введите код с изображения:</label>
+                    <br/>
+                    <input name="password" id="password" type="text" size="10" maxlength="10"/>
+                    <br/>
+                    <br/>
+                    <ul><li id="1_0" class="button" onClick="SubmitDownAjax();">Отправить</li></ul>
+                </div>
+            </form>
+        </div>
+        <div  id="div" onClick="focusDiv();"></div>
+        <div id="progressBar" onDblClick="focusPbDouble();">поиск</div>
+    </body>
+</html>
