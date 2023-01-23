@@ -1,0 +1,7 @@
+Установка eslint
+
+npm install eslint --save-dev
+npm i eslint-plugin-import
+npm i eslint-config-airbnb
+
+

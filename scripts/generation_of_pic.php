@@ -37,7 +37,7 @@ $x3_2=100;
 $x4_2=100;
 $x5_2=100;
 
-$password=rand(1000000,9000000);
+$password=rand(100,999);
 $_SESSION["password"]=$password;
 imagefill($textImage, 0, 0,$grey );
 $degree=rand(-20,20);

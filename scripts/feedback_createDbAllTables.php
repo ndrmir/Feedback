@@ -1,7 +1,7 @@
 <?php
 
 ini_set('display_errors', 'On');
-include_once "../libraries/connect_db.class.php";
+include_once "../libraries/ConnectDb.php";
 use DB\ConnectDb;
 
 /*
