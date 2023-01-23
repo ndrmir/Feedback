@@ -214,7 +214,7 @@ class FeedbackModel
                         // Создаем директорию
                         if (!file_exists($this->uploaddir)) {
                             if (!mkdir($this->uploaddir, 0777, true)) {
-                                $error = 'Не удалось создать директорию...';
+                                $error = 'Не удалось создать директорию.';
                                 $this->errorMessage($error);
                             }
                         }
