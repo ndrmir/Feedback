@@ -1,10 +1,10 @@
 <?php
 
 ini_set('display_errors', 'On');
-include_once "../libraries/ConnectDb.php";
-use DB\ConnectDb;
 
-/*
+use Libraries\ConnectDb;
+
+/**
  * Создание базы данных и всех таблиц для работы сайта
  *
  *

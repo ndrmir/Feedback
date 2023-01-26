@@ -1,12 +1,14 @@
 <?php
-namespace DB;
 
-ini_set('display_errors', 'On');
+namespace Libraries;
+
 require_once "../libraries/ConnectDb.php";
 
 use PDOException;
 use PDO;
+use Libraries\ConnectDb;
 
+// Класс проверки и сохранения данных формы
 class FeedbackModel
 {
     protected $user_tablename;
@@ -252,9 +254,3 @@ class FeedbackModel
         exit;
     }
 }
-
-$feedBack = new FeedbackModel();
-
-$feedBack->saveData();
-
-$feedBack->getMessage();

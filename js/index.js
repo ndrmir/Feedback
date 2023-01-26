@@ -59,7 +59,7 @@ function SubmitDownAjax() {
     const user = {
         'name': name, 'phone': phone, 'email': email, 'password': password,
     };
-    const url = 'scripts/feedbackModel.php';
+    const url = 'scripts/feedback.php';
 
     if (window.FormData === undefined) {
         alert('В вашем браузере FormData не поддерживается');
